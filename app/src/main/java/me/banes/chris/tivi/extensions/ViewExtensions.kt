@@ -48,7 +48,13 @@ fun View.updatePadding(paddingStart: Int = getPaddingStart(),
 }
 
 fun ImageView.loadFromUrl(imageUrl: String) {
-    Glide.with(this).load(imageUrl).into(this)
+    Glide.with(this)
+            .load(imageUrl)
+            .into(this)
+}
+
+fun ImageView.cancelLoad() {
+    Glide.with(this).clear(this)
 }
 
 fun MenuItem.loadIconFromUrl(context: Context, imageUrl: String) {

@@ -19,6 +19,8 @@ package me.banes.chris.tivi.ui.holders
 import android.graphics.drawable.Drawable
 import android.view.View
 import kotlinx.android.synthetic.main.grid_item.*
+import me.banes.chris.tivi.data.entities.TiviShow
+import me.banes.chris.tivi.extensions.cancelLoad
 import me.banes.chris.tivi.extensions.loadFromUrl
 
 class PosterGridHolder(itemView: View) : TiviViewHolder(itemView) {
@@ -28,18 +30,20 @@ class PosterGridHolder(itemView: View) : TiviViewHolder(itemView) {
         show_poster.setImageDrawable(null)
     }
 
-    fun bindShow(posterPath: String?,
-            title: String?,
+    fun bindShow(show: TiviShow,
             annotation: String? = null,
             annotationDrawable: Drawable? = null) {
-        show_title.text = title
+        show_title.text = show.title
         show_title.visibility = View.VISIBLE
 
         show_poster.setImageDrawable(null)
-        if (posterPath != null) {
-            show_poster.loadFromUrl("https://image.tmdb.org/t/p/w342$posterPath")
+        show_poster.visibility = View.VISIBLE
+
+        if (show.tmdbPosterPath != null) {
+            show_poster.loadFromUrl("https://image.tmdb.org/t/p/w342${show.tmdbPosterPath}")
         } else {
-            show_title.visibility = View.VISIBLE
+            show_poster.visibility = View.INVISIBLE
+            show_poster.cancelLoad()
         }
 
         if (annotation != null) {
